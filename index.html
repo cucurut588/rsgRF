@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RSG Store - Redeem RF</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            margin: 0 auto;
+        }
+        
+        .banner {
+            background: linear-gradient(to bottom right, #0f3460, #1a1a2e);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #2d4059;
+            position: relative;
+        }
+        
+        .banner-header {
+            background: linear-gradient(to right, #e94560, #ff7b9c);
+            padding: 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .banner-header h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 5px;
+        }
+        
+        .banner-header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+        
+        .banner-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 20px 20px;
+            opacity: 0.2;
+            z-index: 1;
+        }
+        
+        .banner-content {
+            padding: 40px 30px;
+        }
+        
+        .options-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+            margin-bottom: 40px;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            flex: 1;
+            min-width: 220px;
+            max-width: 300px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .option-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(233, 69, 96, 0.2);
+            border-color: #e94560;
+            background: rgba(233, 69, 96, 0.05);
+        }
+        
+        .option-card.selected {
+            border-color: #e94560;
+            background: rgba(233, 69, 96, 0.1);
+            box-shadow: 0 10px 20px rgba(233, 69, 96, 0.3);
+        }
+        
+        .option-icon {
+            font-size: 2.5rem;
+            color: #e94560;
+            margin-bottom: 15px;
+        }
+        
+        .option-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #fff;
+        }
+        
+        .option-price {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #e94560;
+            margin: 15px 0;
+        }
+        
+        .option-price span {
+            font-size: 0.9rem;
+            color: #aaa;
+            font-weight: 400;
+        }
+        
+        .option-desc {
+            font-size: 0.95rem;
+            color: #aaa;
+            line-height: 1.5;
+        }
+        
+        .btn-container {
+            text-align: center;
+            padding: 0 30px 30px;
+        }
+        
+        .btn-lanjutkan {
+            background: linear-gradient(to right, #e94560, #ff7b9c);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(233, 69, 96, 0.4);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            max-width: 400px;
+        }
+        
+        .btn-lanjutkan:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(233, 69, 96, 0.5);
+            letter-spacing: 1px;
+        }
+        
+        .btn-lanjutkan:active {
+            transform: translateY(0);
+        }
+        
+        .btn-lanjutkan i {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .btn-lanjutkan:hover i {
+            transform: translateX(5px);
+        }
+        
+        .note {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #aaa;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #e94560;
+            color: white;
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+        
+        @media (max-width: 768px) {
+            .options-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .option-card {
+                width: 100%;
+                max-width: 350px;
+            }
+            
+            .banner-header h1 {
+                font-size: 2.2rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .banner-header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .banner-content {
+                padding: 30px 20px;
+            }
+            
+            .btn-lanjutkan {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="banner">
+            <div class="banner-header">
+                <h1>RSG Store</h1>
+                <p>Layanan Joki dan Redeem RF Terpercaya</p>
+            </div>
+            
+            <div class="banner-content">
+                <div class="options-container">
+                    <div class="option-card" data-product="Joki Redeem RF 5.000" data-price="5.000">
+                        <div class="badge">Populer</div>
+                        <div class="option-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3 class="option-title">Joki Redeem RF</h3>
+                        <div class="option-price">Rp 5.000</div>
+                        <p class="option-desc">Layanan joki redeem RF dengan proses cepat dan aman. Tim profesional kami siap membantu Anda.</p>
+                    </div>
+                    
+                    <div class="option-card" data-product="Kode RF 7D" data-price="23.000">
+                        <div class="option-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h3 class="option-title">Kode RF 7 Hari</h3>
+                        <div class="option-price">Rp 23.000</div>
+                        <p class="option-desc">Kode RF yang berlaku selama 7 hari penuh. Dapat digunakan untuk semua server.</p>
+                    </div>
+                    
+                    <div class="option-card" data-product="Kode RF 30D" data-price="63.000">
+                        <div class="option-icon">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h3 class="option-title">Kode RF 30 Hari</h3>
+                        <div class="option-price">Rp 63.000 <span>(Hemat 8%)</span></div>
+                        <p class="option-desc">Kode RF dengan masa aktif 30 hari. Pilihan terbaik untuk kebutuhan jangka panjang.</p>
+                    </div>
+                </div>
+                
+                <div class="btn-container">
+                    <button class="btn-lanjutkan" id="lanjutkanBtn">
+                        <span>Lanjutkan</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <p class="note">Klik tombol di atas untuk melanjutkan pembelian melalui WhatsApp</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const optionCards = document.querySelectorAll('.option-card');
+            const lanjutkanBtn = document.getElementById('lanjutkanBtn');
+            
+            let selectedProduct = {
+                name: "Joki Redeem RF 5.000",
+                price: "5.000"
+            };
+            
+            // Set default selected
+            optionCards[0].classList.add('selected');
+            
+            // Add click event to option cards
+            optionCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // Remove selected class from all cards
+                    optionCards.forEach(c => c.classList.remove('selected'));
+                    
+                    // Add selected class to clicked card
+                    this.classList.add('selected');
+                    
+                    // Update selected product
+                    selectedProduct = {
+                        name: this.getAttribute('data-product'),
+                        price: this.getAttribute('data-price')
+                    };
+                    
+                    console.log("Produk dipilih: ", selectedProduct);
+                });
+            });
+            
+            // Add click event to "Lanjutkan" button
+            lanjutkanBtn.addEventListener('click', function() {
+                // Format pesan WhatsApp
+                const phoneNumber = "6289699748977";
+                const message = `Produk = ${selectedProduct.name}\nHarga = Rp ${selectedProduct.price}\nGaskenMin`;
+                
+                // Encode message for URL
+                const encodedMessage = encodeURIComponent(message);
+                
+                // Create WhatsApp URL
+                const whatsappURL = `https://wa.me/${phoneNumber}?text=${encodedMessage}`;
+                
+                // Open WhatsApp in new tab
+                window.open(whatsappURL, '_blank');
+            });
+            
+            // Add hover effect to cards
+            optionCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    if (!this.classList.contains('selected')) {
+                        this.style.transform = 'translateY(-10px)';
+                    }
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    if (!this.classList.contains('selected')) {
+                        this.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
